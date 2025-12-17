@@ -1,6 +1,6 @@
 module github.com/ice/nats
 
-go 1.25.3
+go 1.25.5
 
 require github.com/nats-io/nats.go v1.47.0
 

@@ -1,28 +1,30 @@
 # Simple Task Runner
 
-A minimal "GitHub Actions" clone using NATS JetStream. Submit bash scripts as tasks, execute them on runners, and stream logs in real-time.
+A minimal "GitHub Actions" clone using NATS JetStream. Submit bash scripts as tasks, execute them on ephemeral runners with controlled concurrency, and stream logs in real-time or view them historically.
 
-## Prerequisites
+## How it works
 
-- Docker (for NATS server)
-- Go 1.21+
-- NATS CLI (`brew install nats-io/nats-tools/nats`)
+Two JetStream streams:
 
-## Start NATS Server
+- **TASKS** (`tasks.*`) — stores bash scripts to execute
+- **LOGS** (`logs.*`) — stores execution output, line by line
 
-```bash
-docker compose up
+The runner (`main.go`) does one thing:
+
+1. Waits for next task from TASKS stream
+2. Saves script to `/tmp/<id>.sh`, executes with bash
+3. Pipes stdout/stderr to LOGS stream in real-time (stderr prefixed with `ERROR::`)
+4. Publishes `EXIT:<code>` when done, exits
+
+Runners are **ephemeral** — each container processes one task and then exits. Docker automatically restarts it via `restart: always` policy, providing a fresh environment for the next task.
+
 ```
-
-## Run the Task Runner
-
-```bash
-go run main.go
+nats pub tasks.<id> "script"  →  TASKS stream  →  runner  →  LOGS stream  →  nats sub logs.<id>
 ```
-
-The runner will wait for a task (up to 1 month).
 
 ## Submit a Task
+
+_Install nats cli tools https://github.com/nats-io/natscli?tab=readme-ov-file#installation_
 
 ```bash
 # Simple task
@@ -33,6 +35,9 @@ nats pub tasks.job-002 "echo start; sleep 2; echo middle; sleep 2; echo done"
 
 # Task with stderr output
 nats pub tasks.job-003 "echo stdout line; echo stderr line >&2; echo another stdout"
+
+# Exec file on runner
+cat ./example.sh | nats pub tasks.job-002
 ```
 
 The task ID is the part after `tasks.` (e.g., `job-001`).
@@ -42,47 +47,35 @@ The task ID is the part after `tasks.` (e.g., `job-001`).
 ### Real-time (streaming)
 
 ```bash
+# Per job
+nats sub 'logs.job-001' --raw
 # Watch all logs in real-time
 nats sub 'logs.*' --raw
 ```
 
-### Historical (from stream)
+### Historical
 
 ```bash
 # View logs for a specific task
 nats stream view LOGS --subject "logs.job-001"
-
-# View all logs
+# Or view all logs
 nats stream view LOGS
 ```
 
-### Log Format
+## Configuration
 
-- Regular output lines appear as-is
-- Stderr lines are prefixed with `ERROR::`
-- When task completes, `EXIT:<code>` is published (e.g., `EXIT:0` for success)
+### Worker Count
 
-### Example Output
+To change the number of parallel workers, modify the `replicas` value in `docker-compose.yml`:
 
-```
-hello world
-ERROR::some error message
-EXIT:0
+```yaml
+runner:
+  deploy:
+    replicas: 3 # Change this number
 ```
 
-## Architecture
+Then restart the services:
 
+```bash
+docker compose up -d
 ```
-┌─────────────┐     tasks.<id>     ┌─────────────┐    logs.<id>      ┌─────────────┐
-│  NATS CLI   │ ─────────────────► │   RUNNER    │ ═══════════════►  │  NATS CLI   │
-│ (publish)   │                    │   (Go app)  │   (line by line)  │ (view)      │
-└─────────────┘                    └─────────────┘                    └─────────────┘
-                   TASKS stream                       LOGS stream
-```
-
-## Notes
-
-- Scripts are saved to `/tmp/<task-id>.sh` (not deleted, for debugging)
-- Execution timeout: 5 minutes
-- Logs are streamed line-by-line in real-time as the script executes
-# minimal-runner

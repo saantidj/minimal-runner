@@ -19,7 +19,11 @@ func main() {
 	ctx := context.Background()
 
 	// Connect to NATS
-	nc, err := nats.Connect(nats.DefaultURL)
+	natsURL := os.Getenv("NATS_URL")
+	if natsURL == "" {
+		natsURL = nats.DefaultURL
+	}
+	nc, err := nats.Connect(natsURL)
 	if err != nil {
 		log.Fatal("Failed to connect to NATS:", err)
 	}
