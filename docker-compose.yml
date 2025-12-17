@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  nats:
+    image: nats:latest
+    container_name: nats
+    command: -V -D -js -sd /data -m 8222
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"
+    stdin_open: true
+    tty: true
+    volumes:
+      - nats_data:/data
+
+volumes:
+  nats_data:
