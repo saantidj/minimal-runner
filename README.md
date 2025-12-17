@@ -22,6 +22,12 @@ Runners are **ephemeral** — each container processes one task and then exits. 
 nats pub tasks.<id> "script"  →  TASKS stream  →  runner  →  LOGS stream  →  nats sub logs.<id>
 ```
 
+## Quick Start
+
+```bash
+docker compose up -d
+```
+
 ## Submit a Task
 
 _Install nats cli tools https://github.com/nats-io/natscli?tab=readme-ov-file#installation_
