@@ -14,8 +14,8 @@ services:
 
 In NATS I create/use two JetStream streams:
 
-- **TASKS** (`tasks.*`) — stores bash scripts to execute
-- **LOGS** (`logs.*`) — stores execution output, line by line
+- **TASKS** (`tasks.*`) - stores bash scripts to execute
+- **LOGS** (`logs.*`) - stores execution output, line by line
 
 For creating and viewing tasks/jobs I just use the `nats` CLI.
 
@@ -32,7 +32,7 @@ As a user, you can execute shell scripts on the runner like:
 cat ./example.sh | nats pub tasks.job-001
 ```
 
-And see results either in real time or later:
+And see stdout/stderr logs either in real time or later:
 
 ```bash
 # realtime
@@ -46,4 +46,4 @@ The runner itself was written by AI in Go, because in Bash it would be a bit har
 
 Repo: https://github.com/istarkov/minimal-runner
 
-**P.S.** This is just a minimal idea. You can add tags/metadata, retries, timeouts, scheduling, etc. You can also scale it across multiple machines (even across regions) — runners can live anywhere as long as they can connect to NATS.
+**P.S.** This is just a minimal idea. You can add tags/metadata, retries, timeouts, scheduling, etc. You can also scale it across multiple machines (even across regions) - runners can live anywhere as long as they can connect to NATS.
