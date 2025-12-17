@@ -13,7 +13,7 @@ COPY *.go ./
 # Build static binary
 RUN CGO_ENABLED=0 go build -o runner .
 
-# Runtime stage
+# Use any image you like for runner
 FROM bash:4.4
 
 COPY --from=builder /app/runner /runner
