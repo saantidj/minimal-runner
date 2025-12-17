@@ -1,4 +1,4 @@
-I always used GitHub Actions for various tasks, not only builds. But I was a bit surprised how easy it is to build something similar today. If you have any durable message processing system you can build a processing system in basically one page of code.
+Recently I was surprised how easy it is to build a minimal ephemeral task runner today. With a durable message stream and Docker restarting containers, you can get something useful in basically one page of AI-written code.
 
 For message processing, I use **NATS** because it already has most of the tools I need. It’s small and easy.
 
