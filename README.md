@@ -2,6 +2,8 @@
 
 A minimal "GitHub Actions" clone using NATS JetStream. Submit bash scripts as tasks, execute them on ephemeral runners with controlled concurrency, and stream logs in real-time or view them historically.
 
+📖 [Why I built this](WHY.md)
+
 ## How it works
 
 Two JetStream streams:
