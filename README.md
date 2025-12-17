@@ -47,9 +47,9 @@ The task ID is the part after `tasks.` (e.g., `job-001`).
 ### Real-time (streaming)
 
 ```bash
-# Per job
+# Per task
 nats sub 'logs.job-001' --raw
-# Watch all logs in real-time
+# Or watch all logs in real-time
 nats sub 'logs.*' --raw
 ```
 
